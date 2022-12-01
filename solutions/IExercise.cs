@@ -1,0 +1,4 @@
+interface IExercise
+{
+    void Solve();
+}
