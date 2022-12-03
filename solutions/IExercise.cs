@@ -1,4 +1,0 @@
-interface IExercise
-{
-    void Solve();
-}

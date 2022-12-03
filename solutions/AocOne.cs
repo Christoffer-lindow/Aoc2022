@@ -1,4 +1,4 @@
-class AocOne : IExercise
+class AocOne : Exercise
 {
     private string _data = "./data/aoc-one.txt";
     public void Solve()

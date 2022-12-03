@@ -1,4 +1,4 @@
-class AocTwo : IExercise
+class AocTwo : Exercise
 {
     private readonly List<(char, char)> _testData = new() { ('Y', 'A'), ('X', 'B'), ('Z', 'C') };
     private string _path = "./data/aoc-two.txt";
