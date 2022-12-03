@@ -3,29 +3,29 @@ class AocTwo : Exercise
     private readonly List<(char, char)> _testData = new() { ('Y', 'A'), ('X', 'B'), ('Z', 'C') };
     private string _path = "./data/aoc-two.txt";
 
-    private HandType TranslateOtherHand(char input)
+    private HandType TranslateOtherHand(char input) => input switch
     {
-        return input switch
-        {
-            'A' => HandType.Rock,
-            'B' => HandType.Paper,
-            'C' => HandType.Scissors,
-            _ => throw new Exception("unreachable")
-        };
-    }
+        'A' => HandType.Rock,
+        'B' => HandType.Paper,
+        'C' => HandType.Scissors,
+        _ => throw new Exception("unreachable")
+    };
 
-    private HandType TranslatePlayerHand(char player, HandType other)
+    private HandType WinningStrategy(char player, HandType other)
     {
-        switch (player) {
+        switch (player)
+        {
             case 'X':
-                return other switch {
+                return other switch
+                {
                     HandType.Rock => HandType.Scissors,
                     HandType.Paper => HandType.Rock,
                     HandType.Scissors => HandType.Paper,
                     _ => throw new Exception("unreadable")
                 };
             case 'Z':
-                return other switch {
+                return other switch
+                {
                     HandType.Rock => HandType.Paper,
                     HandType.Paper => HandType.Scissors,
                     HandType.Scissors => HandType.Rock,
@@ -37,25 +37,24 @@ class AocTwo : Exercise
     }
 
 
-    bool PlayerIsWinner(HandType playerHand, HandType otherHand)
+    bool PlayerIsWinner(HandType playerHand, HandType otherHand) => (playerHand, otherHand) switch
     {
-        switch (playerHand) {
-            case HandType.Rock: return otherHand == HandType.Scissors;
-            case HandType.Scissors: return otherHand == HandType.Paper;
-            case HandType.Paper: return  otherHand == HandType.Rock;
-            default: throw new Exception("unreachable");
-        }
-    }
+        (HandType.Rock, HandType.Scissors) => true,
+        (HandType.Paper, HandType.Rock) => true,
+        (HandType.Scissors, HandType.Paper) => true,
+        _ => false
+    };
+
 
     int GetPlayerScoreByRound(char player, char other)
     {
         HandType otherHand = TranslateOtherHand(other);
-        HandType playerHand = TranslatePlayerHand(player, otherHand);
+        HandType playerHand = WinningStrategy(player, otherHand);
         int handValue = (int)playerHand;
 
         if (playerHand == otherHand) return 3 + handValue;
 
-        return PlayerIsWinner(playerHand, otherHand) ? 6+ handValue : handValue;
+        return PlayerIsWinner(playerHand, otherHand) ? 6 + handValue : handValue;
     }
 
     private enum HandType
@@ -82,7 +81,7 @@ class AocTwo : Exercise
             char? player = null;
             char? other = null;
 
-            List<(char,char)> data = new();
+            List<(char, char)> data = new();
 
             while (sr.Peek() >= 0)
             {
